@@ -9,7 +9,7 @@ services:
     volumes:
       - /var/lib/jenkins/jenkins_home:/var/jenkins/jenkins_home
       - /var/run/docker.sock:/var/run/docker.sock
-      - ./jenkins_master_casc.yaml:/var/jenkins_home/casc.yaml
+#      - ./jenkins_master_casc.yaml:/var/jenkins_home/casc.yaml
     environment:
       - JAVA_OPTS=-Djenkins.install.runSetupWizard=false
       - "JENKINS_HOST=${JENKINS_HOST}"
