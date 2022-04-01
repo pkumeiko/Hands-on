@@ -18,3 +18,4 @@ security:
     authenticators:
       - global:
           strategy: triggeringUsersAuthorizationStrategy
+
