@@ -61,6 +61,14 @@
   tags:
     - deploy_minikube
 
+- name: Fixing dockerSock permissions
+  file:
+    path: /var/run/docker.sock
+    mode: '0666'
+  become: true
+  tags:
+    - deploy_minikube
+
 - name: start minikube
   shell: bash -c "minikube start"
   tags:

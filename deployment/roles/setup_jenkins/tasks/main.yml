@@ -36,6 +36,14 @@
   tags:
     - setup_jenkins
 
+- name: Fixing dockerSock permissions
+  file:
+    path: /var/run/docker.sock
+    mode: '0666'
+  become: true
+  tags:
+    - setup_jenkins
+
 - name: set environment
   template:
     src: jenkins_envs.sh.j2
