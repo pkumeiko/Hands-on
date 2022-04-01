@@ -11,6 +11,9 @@ pipeline {
         // Stage conf to setup environment variable for build
         stage("conf") {
             steps {
+                sh '''ls 
+                ls deployment/
+                '''
                 script {
                     def pom = readMavenPom file: 'pom.xml'
                     env['PROJ'] = pom.artifactId
@@ -168,3 +171,4 @@ pipeline {
         }
     }
 }
+
