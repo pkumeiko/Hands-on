@@ -18,3 +18,4 @@ ssh-slaves:latest
 timestamper
 workflow-aggregator:latest
 ws-cleanup:latest
+pipeline-utility-steps
