@@ -77,10 +77,12 @@ pipeline {
         stage("build deployment image") {
             steps {
                 script {
+                    sh 'cd deployment'
+                    sh 'pwd | xargs cp /var/jenkins_home/key.pem'
                     env['DEP_IMAGE'] = "ansible_dep:${env.BUILD_ID}"
                     def dockerfile = 'deployment/ansible_Dockerfile'
                     docker.build("${env.DEP_IMAGE}", "-f ${dockerfile} .")
-                    sh 'docker cp /var/jenkins_home/key.pem ${env.DEP_IMAGE}:/var/key.pem'
+                    
                 }
             }
         }
