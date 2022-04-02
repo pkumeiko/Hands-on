@@ -107,8 +107,9 @@ pipeline {
                         inventory: 'deployment/inventory',
                         colorized: true,
                         disableHostKeyChecking: true,
-                        credentialsId: 'ec2',
-                        extras: "-e image=${env.IMAGE} " +
+//                        credentialsId: 'ec2',
+                        extras: "--private-key=deployment/key.pem " +
+                                "-e image=${env.IMAGE} " +
                                 "-e project_name=${env.PROJ} " +
                                 "-e project_path=${env.PROJ_PATH} " +
                                 "-e helm_package=${env.HELM_PACKAGE} " +
