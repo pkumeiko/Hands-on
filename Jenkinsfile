@@ -78,7 +78,7 @@ pipeline {
             steps {
                 script {
                     env['DEP_IMAGE'] = "ansible_dep:${env.BUILD_ID}"
-                    def dockerfile = 'deployment/Dockerfile_ansible'
+                    def dockerfile = 'deployment/ansible_Dockerfile'
                     docker.build("${env.DEP_IMAGE}", "-f ${dockerfile} .")
                 }
             }
