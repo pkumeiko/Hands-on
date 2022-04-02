@@ -22,8 +22,7 @@ RUN apt-get update && apt-get install -y docker-ce-cli
 RUN groupadd -g $group_id docker && usermod -aG docker jenkins
 USER jenkins
 # Jenkins setup install plugins
-COPY key.pem /var/jenkins_home/key.pem
-RUN chmod 777 /var/jenkins_home/key.pem
+
 COPY plugins.txt /usr/share/jenkins/ref/plugins.txt
 RUN jenkins-plugin-cli -f /usr/share/jenkins/ref/plugins.txt
 # cp the casc settings to jenkins_home

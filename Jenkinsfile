@@ -77,8 +77,7 @@ pipeline {
         stage("build deployment image") {
             steps {
                 script {
-                    sh 'cd deployment'
-                    sh 'pwd | xargs cp /var/jenkins_home/key.pem'
+                    
                     env['DEP_IMAGE'] = "ansible_dep:${env.BUILD_ID}"
                     def dockerfile = 'deployment/ansible_Dockerfile'
                     docker.build("${env.DEP_IMAGE}", "-f ${dockerfile} .")
@@ -107,7 +106,7 @@ pipeline {
                         inventory: 'deployment/inventory',
                         colorized: true,
                         disableHostKeyChecking: true,
-//                        credentialsId: 'ec2',
+                        credentialsId: 'ec2',
                         extras: "-e image=${env.IMAGE} " +
                                 "-e project_name=${env.PROJ} " +
                                 "-e project_path=${env.PROJ_PATH} " +
