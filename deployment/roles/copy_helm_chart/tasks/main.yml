@@ -10,7 +10,7 @@
 
 - name: Copy helm package to remote
   copy:
-    src: "{{ workspace }}/{{ helm_package }}"
+    src: "../../../../{{ helm_package }}"
     dest: "{{ project_path }}/{{ helm_package }}"
     mode: '0744'
   tags:
