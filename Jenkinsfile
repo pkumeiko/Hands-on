@@ -97,15 +97,14 @@ pipeline {
                    echo "copy package"
                    sh 'ls -la'
                 }
-                withCredentials([sshUserPrivateKey(credentialsId: 'github_key', keyFileVariable: 'PRIVATE')])
+                
                 ansiblePlaybook(
                         playbook: 'deployment/deploy_app_to_minikube.yml',
                         inventory: 'deployment/inventory',
                         colorized: true,
                         disableHostKeyChecking: true,
-                        credentialsId: '5810a555-b137-4aa1-8301-9ba6f50b9179',
-                        extras: "-e private-key $PRIVATE " +
-                                "-e image=${env.IMAGE} " +
+                        credentialsId: '${GITHUB_KEY}',
+                        extras: "-e image=${env.IMAGE} " +
                                 "-e project_name=${env.PROJ} " +
                                 "-e project_path=${env.PROJ_PATH} " +
                                 "-e helm_package=${env.HELM_PACKAGE} " +
