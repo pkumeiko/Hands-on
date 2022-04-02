@@ -1,6 +1,6 @@
 ---
 - name: start_test_minikube_app
-  hosts: minikube
+  hosts: "minikube"
   gather_facts: True
 
   roles:
