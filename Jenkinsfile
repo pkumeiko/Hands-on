@@ -107,7 +107,7 @@ pipeline {
                         inventory: 'deployment/inventory',
                         colorized: true,
                         disableHostKeyChecking: true,
-                        credentialsId: '${GITHUB_KEY}',
+                        credentialsId: 'ec2',
                         extras: "-e image=${env.IMAGE} " +
                                 "-e project_name=${env.PROJ} " +
                                 "-e project_path=${env.PROJ_PATH} " +

@@ -1,6 +1,6 @@
 ---
 - name: deploy minikube on remote
-  hosts: minikube
+  hosts: "minikube"
   gather_facts: True
 
   roles:
