@@ -49,9 +49,9 @@
 
 - name: verify port open
   local_action:
-    module: wait_for
-    host: "{{ ansible_host }}"
+    module: wait_for  
+    host: "{{ minideploy }}"
     port: "8080"
-    timeout: 1
+    timeout: 3
 
 - debug: msg="port open"
