@@ -2,4 +2,7 @@
 jenkins_master ansible_host=54.171.122.152 ansible_user=ec2-user host_key_checking=False
 
 [minikube]
-minideploy ansible_host=34.250.205.185 ansible_user=ec2-user host_key_checking=False ansible_ssh_private_key_file=deployment/key.pem
+ansible_host=34.250.205.185 
+ansible_user=ec2-user 
+host_key_checking=False 
+ansible_ssh_private_key_file=deployment/key.pem
