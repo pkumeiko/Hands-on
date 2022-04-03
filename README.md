@@ -50,5 +50,6 @@
   1. System Admin e-mail address (type-in email address which will be used to send notifications <from:>)
   2. Extended E-mail Notification (preinstalled) -> <your SMTP server address> <port 465> <add email credentials username\password> <use SSL>
   3. E-mail Notification (has to be filled-in to work properly with SMTP) -> <Use SMTP Auth><username and password><use SSL><SMTP port 465>
+  * In Jenkinsfile line 173 replace email address with the one who supposed to get updates on build status.
   
 # After all these steps Jenkins should be ready to receive your recent changes on Github and deploy it to EC2-instance
