@@ -31,7 +31,7 @@
   tags:
     - setup_port_forward
 
-- name: debug port farword file
+- name: debug port forward file
   shell: cat "{{ project_path }}/run_port_forward.sh"
   register: pf_file
   tags:
@@ -51,7 +51,7 @@
   local_action:
     module: wait_for  
     host: "{{ ansible_host }}" 
-    port: "8080"
+    port: "31500"
     timeout: 3
 
 - debug: msg="port open"
