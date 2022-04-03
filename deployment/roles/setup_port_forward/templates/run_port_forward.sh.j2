@@ -1,2 +1,2 @@
 #!/bin/bash
-nohup socat TCP:8080,fork TCP:{{ minikube_ip.stdout | trim }}:{{ service_node_port.stdout | trim }} &
+socat TCP-LISTEN:8080,fork TCP:{{ minikube_ip.stdout | trim }}:{{ service_node_port.stdout | trim }} &
