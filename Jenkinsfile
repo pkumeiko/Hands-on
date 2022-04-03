@@ -170,7 +170,7 @@ pipeline {
                 Result: ${currentBuild.currentResult}
                 """
                 
-                emailext body: body, subject: status, to: 'dakrus17@gmail.com'
+                emailext body: body, subject: status, to: 'katsok@personetics.com'
             }
             sh "rm deployment/${env.IMAGE}.tar"
         }

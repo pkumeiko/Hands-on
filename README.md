@@ -14,14 +14,14 @@
      - Setup the Jenkins Master server
      - Setup the k8s (minikube) deployment server
      - Deploying the app via helm to k8s instance (localhost minikube)
-     - Starting + Stopping port-forward from remote to the minikube service (work-in-progress)
+     - Starting + Stopping port-forward from remote to the minikube service (work-in-progress, scripts are working only by manual start)
 4. environment folder 
    * Containing the info to access both servers 
     
 ## Usage
 1. File "deployment/inventory" should be changed with your EC-2 IP addresses
-2. To deploy Jenkins to EC-2 instance: ansible-playbook deployment/deploy_jenkins.yml -i deployment/inventory
-3. To deploy Minikube to EC-2 instance: ansible-playbook deployment/deploy_minikube.yml -i deployment/inventory
+2. To deploy Jenkins to EC-2 instance: ansible-playbook deployment/deploy_jenkins.yml -i deployment/inventory --private-key=<your private key for EC2 instance>
+3. To deploy Minikube to EC-2 instance: ansible-playbook deployment/deploy_minikube.yml -i deployment/inventory --private-key=<your private key for EC2 instance>
 
 ## Setting up Jenkins
 #### 1. Login on http://jenkins-instance-ip-address:8080 with default credentials

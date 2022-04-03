@@ -43,15 +43,6 @@
   become: true
   tags:
     - setup_jenkins
-
-#- name: copy key to jenkins
-#  become: true
-#  copy:
-#    src: "jenkins_master/key.pem"
-#    dest: "/var/jenkins_home/key.pem"   
-#    mode: 0600
-#  tags:
-#    - setup_jenkins
     
 - name: set environment
   template:
