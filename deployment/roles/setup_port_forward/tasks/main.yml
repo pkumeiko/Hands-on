@@ -50,7 +50,7 @@
 - name: verify port open
   local_action:
     module: wait_for  
-    host: "{{ minikube }}"
+    host: "{{ ansible_host }}" 
     port: "8080"
     timeout: 3
 

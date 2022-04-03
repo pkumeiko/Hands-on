@@ -1,4 +1,6 @@
-## Demo Repo
+![Build Status](http://54.171.122.152:8080/buildStatus/icon?job=My-pipeline)
+
+## Hands-on assignment
 ### The repo contains the following elements
 1. At root level spring-boot ``perso-greet`` project ( [tutorial](https://spring.io/guides/gs/serving-web-content/) ) 
    * Maven project - build using `mvn clean package`
@@ -9,66 +11,44 @@
    * Dockerfile_helm - docker image for building the helm package  
 3. deployment folder 
    * containing ansible(v2.9) playbooks and roles 
-     - Setup the Jesnkins Master server
+     - Setup the Jenkins Master server
      - Setup the k8s (minikube) deployment server
-     - Deploying the app via helm to k8s (localhost minikube)
-     - Starting + Stopping port-forward from remote to the minikube service 
+     - Deploying the app via helm to k8s instance (localhost minikube)
+     - Starting + Stopping port-forward from remote to the minikube service (work-in-progress)
 4. environment folder 
    * Containing the info to access both servers 
     
-### Status
-1. `perso-greet` project (maven) is building successfully tested and verified (Treat this as a black box).
-2. The `perso-greet` Project Image is also builds correctly and tested locally (Treat this as a black box).
-3. Jenkinsfile was tested in a previous environment which has been compromised
-4. deployment was also compromised
-   1. `deploy_jenkins.yml`playbook deploying jenkins master
-   2. `deploy_minikube.yml`playbook  deploying the runtime environment
-   3. `deploy_app_to_minikube.yml`deploy the app to minikube
-5. Helm package - has been compromised was previously deployed successfully once but not verified
+## Usage
+1. File "deployment/inventory" should be changed with your EC-2 IP addresses
+2. To deploy Jenkins to EC-2 instance: ansible-playbook deployment/deploy_jenkins.yml -i deployment/inventory
+3. To deploy Minikube to EC-2 instance: ansible-playbook deployment/deploy_minikube.yml -i deployment/inventory
 
-### Currently, the original Jenkins master is not safe to run the build. Thus, Jenkinsfile is our only source of truth for the required configuration.   
-### The repo in this zip file is our only leftover we could find, it was also compromised and many untested changes were committed 
-### Your mission, should  you choose to accept it
-1. Deploy a new Jenkins master using deployment playbook 
-   - Jenkins' configuration uses [configuration-as-code-plugin](https://github.com/jenkinsci/configuration-as-code-plugin/blob/master/README.md) to start secured
-2. Deploy the minikube development environment via playbook
-3. Run the Jenkinsfile and make it successfully finish
-    - Connect the Jenkins to a git VCS (i.e. GitHub/bitbucket/gitlab 
-      all has free account capacity) 
-    - Use webhook for each commit push (no polling) 
-    - Use jenkins credentials when needed (someone always hacking)
-4. Run the `deploy_app_to_minikube.yml` playbook development to deploy the `greet` chart with helm to minikube development env
-5. Remote stage test - ***Optional***
-   - Enable remote test for the `greet` api from Jenkinsfile stage
-6. SMTP - ***Optional***
-   - Enable smtp mailing for post stage
-
-##### Resources:
-***In the environment folder***
-1. jkey - the private key for servers connect with default ec2 user
-2. ips - list of ips to use with the key one for Jenkins and one for deployment
-
-### Delivery
-#### Document all your steps for the solution, so we can reuse them
-#### Send us back a zip with your changes and a readme with all prerequisites and action/scripts needed to redeploy it on a clean env
-
-### The environment will self-destruct at ...
-
-
-
-
-###### Note on jenkins deployment - (info only)
-> Since there are problems with running docker in docker ([you can read about it here](https://jpetazzo.github.io/2015/09/03/do-not-use-docker-in-docker-for-ci/))
-> Please use the following host mounts in your docker configuration and not docker in docker
-> as it's simpler than jenkins.io installation guide
->
-```yaml
-  - /var/run/docker.sock:/var/run/docker.sock
-  - /usr/local/bin/docker:/usr/local/bin/docker
+## Setting up Jenkins
+#### 1. Login on http://jenkins-instance-ip-address:8080 with default credentials
+#### 2. Create Pipeline: New Item -> Pipeline 
+#### 3. Following settings shall be checked during pipeline creation:
+   1. Github project -> Project URL (example https://github.com/pkumeiko/Hands-on/)
+   2. Build Triggers -> GitHub hook trigger for GITScm polling
+   3. Pipeline -> Pipeline script from SCM -> SCM (Git) -> Repository URL (example https://github.com/pkumeiko/Hands-on.git) -> Credentials (add your username\password or SSH key for Github auth to be download repo)
+   4. Branches to build -> Branch specifier (*/main)
+   5. Script patch (Jenkinsfile)
+#### 4. Setup Maven in Jenkins:   Manage Jenkins -> Global Configuration Tool -> Add Maven -> Maven:3.8.5 from Apache
+#### 5. Create ec2 credentials for accessing Minikube instance from Jenkins: Manage Jenkins -> Manage Credentials -> click on domain "global" -> Add credentials:
+   1. Kind "SSH username with private key"
+   2. ID: ec2
+   3. Username: ec2-user
+   4. Private key -> Enter directly -> paste your private SSH key for minikube EC2-instance
+#### 6. Setup webhook on your cloned repo: Settings -> Webhooks -> add webhook -> Payload URL (http://<jenkins-instance-ip-address>:8080/github-webhook) -> Content type (json)
+#### 7. Following groovy script should be approved in Jenkins (to run and build greet-app): Manage Jenkins -> In-process Script Approval ->
+  ```    
+  staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods getAt java.lang.Object java.lang.String
+    staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods putAt java.lang.Object java.lang.String java.lang.Object
 ```
-> Make sure the runtime user and group has docker socket permissions !! 
-
-###### Helm reference - (info only)
-[best practices](https://helm.sh/docs/chart_best_practices/)
-[tips and tricks ](https://helm.sh/docs/howto/charts_tips_and_tricks/)
-[debugging](https://helm.sh/docs/chart_template_guide/debugging/)
+  
+#### 8. You can also setup email provider to send notifications with build status:
+  * Manage Jenkins -> Configure System -> 
+  1. System Admin e-mail address (type-in email address which will be used to send notifications <from:>)
+  2. Extended E-mail Notification (preinstalled) -> <your SMTP server address> <port 465> <add email credentials username\password> <use SSL>
+  3. E-mail Notification (has to be filled-in to work properly with SMTP) -> <Use SMTP Auth><username and password><use SSL><SMTP port 465>
+  
+# After all these steps Jenkins should be ready to receive your recent changes on Github and deploy it to EC2-instance
