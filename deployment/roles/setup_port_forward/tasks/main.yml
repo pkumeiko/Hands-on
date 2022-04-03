@@ -41,9 +41,9 @@
 
 - name: Create and start listener
   shell: ./run_port_forward.sh
-  args:
-    chdir: "{{ project_path }}"
-    executable: /bin/bash
+#  args:
+#    chdir: "{{ project_path }}"
+#    executable: /bin/bash
   tags:
     - setup_port_forward
 
