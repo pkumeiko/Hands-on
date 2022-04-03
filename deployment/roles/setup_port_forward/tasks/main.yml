@@ -49,7 +49,7 @@
 
 - name: verify port open
   local_action:
-    module: wait_for  
+    module: wait_for_connection
     host: "{{ ansible_host }}" 
     port: "8080"
     timeout: 3
