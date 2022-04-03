@@ -42,6 +42,7 @@
 - name: Create and start listener
   become: true
   shell: ./run_port_forward.sh
+  shell: socat TCP-LISTEN:8080,fork TCP:{{ minikube_ip.stdout | trim }}:{{ service_node_port.stdout | trim }} &
   args:
     chdir: "{{ project_path }}"
     executable: /bin/bash
