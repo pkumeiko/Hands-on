@@ -40,7 +40,7 @@
 - debug: msg="{{ pf_file.stdout }}"
 
 - name: Create and start listener
-  shell: "./run_port_forward.sh"
+  shell: ./run_port_forward.sh
   args:
     chdir: "{{ project_path }}"
     executable: /bin/bash
@@ -49,7 +49,7 @@
 
 - name: verify port open
   local_action:
-    module: wait_for_connection
+    module: wait_for
     host: "{{ ansible_host }}" 
     port: "8080"
     timeout: 3
