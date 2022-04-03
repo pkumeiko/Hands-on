@@ -40,6 +40,7 @@
 - debug: msg="{{ pf_file.stdout }}"
 
 - name: Create and start listener
+  become: true
   shell: ./run_port_forward.sh
   args:
     chdir: "{{ project_path }}"
