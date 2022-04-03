@@ -27,7 +27,7 @@
   template:
     src: run_port_forward.sh.j2
     dest: "{{ project_path }}/run_port_forward.sh"
-    mode: '0750'
+    mode: '0755'
   tags:
     - setup_port_forward
 
@@ -41,9 +41,9 @@
 
 - name: Create and start listener
   shell: ./run_port_forward.sh
-#  args:
-#    chdir: "{{ project_path }}"
-#    executable: /bin/bash
+  args:
+    chdir: "{{ project_path }}"
+    executable: /bin/bash
   tags:
     - setup_port_forward
 
